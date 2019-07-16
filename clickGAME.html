@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body {
+            white-space: break-all;
+        }
+
+        div {
+            width: 1px;
+            height: 1px;
+            position: absolute;
+            background: #abcdef;
+
+        }
+
+        .big {
+            width: 1000px;
+            height: 600px;
+            position: relative;
+            background: #fff;
+            border: 2px solid #000;
+            /* left:50px; */
+            /* top: 50px; */
+            left: 50%;
+            margin-left: -500px;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        p {
+            text-align: center;
+        }
+
+        span {
+            padding: 0 10px;
+            color: green;
+            background: yellow;
+        }
+
+        h1 {
+            margin: 1px;
+            text-align: center;
+        }
+
+        a {
+            padding: 0 10px;
+            color: green;
+            background: yellow;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h2>是男人就坚持30s!!!!</h2>
+        <p>点击黑框开始！页面上同时有8个就输了知道吧！王浩枫。还有点歪了就翻倍加速，过10s快一点点</p>
+        <p>页面上的方块为<span id="ge"></span>个</p>
+        <div class="big" id="big"></div>
+        <h1>宁坚持了<a href="#" id="miao"></a>秒了！加油</h1>
+    </header>
+    <!-- <div class="box"></div> -->
+    <!-- <script>
+        function test() {
+            var arr = [];
+            for (var i = 0; i < 5; i++) {
+                (function (j) {
+                    arr[j] = function fn() {
+                        document.write( j + '  ');
+                    }
+                }(i));
+            }
+            return arr;
+        }
+        var demo = test();
+        for (var i = 0; i < 5; i++) {
+            demo[i]();
+        }
+    </script> -->
+    <script>
+
+
+
+        class clc {
+            constructor() {
+                this.box = document.getElementById('big');
+                // this.boom = 0;
+                this.num = 0;
+                this.fk = document.getElementById('ge');
+                this.a = document.getElementById('miao');
+            }
+
+            Math(min, max) {
+                return parseInt(Math.random() * (max - min) + min);   //随机数  为了在页面随机在生成
+            }
+
+            // clic() {
+            //     let that = this;
+            //     document.onmousedown = function (ev) {
+            //         ev = ev || window.event;
+            //         that.add(ev.clientX, ev.clientY);
+            //     }
+            // }
+
+            big() {   //大盒子  点击就开始
+                let that = this;
+                this.box.onclick = function () {
+                    that.boom++;
+                    that.gameGo();
+                    that.box.onclick = null;
+                }
+            }
+
+            gameGo() {
+                let that = this;
+                let time = 0;
+                let timer = setInterval(function () {
+                    time++;
+                    if (time > 20 && time % 5 == 0) {  //10s - 20s
+                        that.tim();
+                    }
+                    if (time > 40 && time % 5 == 0) {  // 20s - 30s
+                        that.tim();
+                    }
+                    if (time > 60) {  //> 30 s
+                        clearInterval(timer);
+                        alert('牛啊王浩枫！');
+                    }
+                    that.a.innerHTML = time / 2;
+                    that.tim();
+                    // if (that.boom == 3) {
+                    //     clearInterval(timer);
+                    //     alert('Game Over');
+                    // }
+                }, 500);
+            }
+
+            tim() {
+                let x = this.Math(this.box.offsetLeft + 50, this.box.offsetLeft + 1000 - 50);
+                let y = this.Math(this.box.offsetTop + 50, this.box.offsetTop + 600 - 50);
+                this.add(x, y);
+            }
+
+            add(x, y) {  // 点击生成
+                let that = this;
+                let div = document.createElement('div');
+                div.style.left = x + 'px';
+                div.style.top = y + 'px';
+                document.body.appendChild(div);
+                this.num++;
+                div.onclick = function (ev) {
+                    that.num--;
+                    div.remove();
+                    this.fk.innerHTML = this.num;
+                }
+                this.gobig(div);
+                this.fk.innerHTML = this.num;
+                if (this.num > 8) {
+                    alert('好菜啊你王浩枫');
+                    location.reload(true);
+                }
+            }
+            gobig(obj) {
+                let time = 0;
+                let k = 1, g = 1;
+                let l = obj.offsetLeft, t = obj.offsetTop;
+                let timm = setInterval(function () {
+                    k += 1;
+                    g += 1;
+                    obj.style.width = k + 'px';
+                    obj.style.height = g + 'px';
+                    console.log(obj.offsetLeft - obj.offsetWidth / 2);
+                    console.log(obj.offsetLeft);
+
+                    obj.style.left = (l - obj.offsetWidth / 2) + 'px';
+                    obj.style.top = (t - obj.offsetHeight / 2) + 'px';
+                    time++;
+                    if (time == 100) {
+                        clearInterval(timm);
+                    }
+                }, 5);
+            }
+        }
+        new clc().big();
+
+    </script>
+</body>
+
+</html>
